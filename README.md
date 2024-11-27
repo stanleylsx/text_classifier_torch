@@ -32,7 +32,7 @@ This repository is built for text classification tasks based on Torch, incorpora
 While text classification problems can be effectively addressed by Large Language Models (LLMs) in the LLM era, traditional classification models are still needed in specific scenarios, such as high-concurrency services or low-resource devices. This project implements most of the classification training techniques used before the LLM era. Additionally, it organizes relevant models and training-related techniques along with their corresponding research papers at the end of the documentation, providing users with a convenient reference.  
 
 ## Updates 
-日期| 版本     |描述
+Date| Version|Description
 :---|:-------|---
 2023-12-01| v5.4.0 |Added support for multi-label text classification and introduced a multi-label classification loss function.
 2023-05-31| v5.3.0 |Modified the data post-processing logic to occur after each training batch.
