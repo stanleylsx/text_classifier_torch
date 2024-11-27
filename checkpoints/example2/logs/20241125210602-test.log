@@ -1,0 +1,211 @@
+2024-11-25 21:06:02
+device: cuda
+{
+  "train_file": "datasets/example_datasets2/train_dataset.csv",
+  "val_file": "datasets/example_datasets2/val_dataset.csv",
+  "multilabel": false,
+  "kfold": false,
+  "fold_splits": 4,
+  "validation_rate": 0.15,
+  "test_file": "datasets/example_datasets2/test_dataset.csv",
+  "token_level": "word",
+  "stop_words": false,
+  "stop_words_file": "datasets/example_datasets2/stop_words.txt",
+  "remove_special": true,
+  "token_file": "datasets/example_datasets2/word-token2id",
+  "classes": [
+    "家居",
+    "时尚",
+    "教育",
+    "财经",
+    "时政",
+    "娱乐",
+    "科技",
+    "体育",
+    "游戏",
+    "房产"
+  ],
+  "checkpoints_dir": "checkpoints/example2",
+  "max_sequence_length": 50,
+  "dropout_rate": 0.5,
+  "metrics_average": "macro",
+  "use_focal_loss": true,
+  "weight": null,
+  "use_poly_loss": false,
+  "use_label_smoothing": false,
+  "smooth_factor": 0.1,
+  "use_gan": false,
+  "gan_method": "pgd",
+  "attack_round": 3,
+  "use_r_drop": false,
+  "multisample_dropout": true,
+  "dropout_round": 5,
+  "seed": 3407,
+  "noisy_tune": false,
+  "warmup": true,
+  "scheduler_type": "linear",
+  "num_warmup_steps": -1,
+  "swa": false,
+  "swa_start_step": 5000,
+  "swa_lr": 1e-06,
+  "anneal_epochs": 1,
+  "ema": false,
+  "optimizer": "AdamW",
+  "init_network": false,
+  "init_network_method": "xavier",
+  "use_fp16": false,
+  "f_model_type": "Bert",
+  "ptm": "bert-base-chinese",
+  "f_epoch": 30,
+  "f_batch_size": 16,
+  "f_learning_rate": 4e-05,
+  "f_print_per_batch": 50,
+  "f_is_early_stop": true,
+  "f_patient": 3,
+  "f_model_name": "torch.bin",
+  "s_model_type": "TextCNN",
+  "embedding_dim": 300,
+  "num_filters": 64,
+  "hidden_dim": 2048,
+  "use_attention": false,
+  "encoder_num": 1,
+  "head_num": 12,
+  "s_epoch": 100,
+  "s_batch_size": 16,
+  "s_learning_rate": 0.001,
+  "s_print_per_batch": 50,
+  "s_is_early_stop": true,
+  "s_patient": 8,
+  "s_model_name": "torch.bin"
+}
+{
+  "self_distillation": false,
+  "distillation_method": "kl",
+  "teacher_model_type": "Bert",
+  "student_model_type": "TextCNN",
+  "checkpoints_dir": "checkpoints/example1_distillation_1",
+  "epoch": 100,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "print_per_batch": 50,
+  "is_early_stop": true,
+  "patient": 2,
+  "alpha": 0.1,
+  "temperature": 4,
+  "student_model_name": "distillation_model.bin",
+  "teacher_model_name": "torch.bin",
+  "distill_mlm_config": {
+    "attention_probs_dropout_prob": 0.1,
+    "hidden_act": "gelu",
+    "hidden_dropout_prob": 0.1,
+    "hidden_size": 768,
+    "initializer_range": 0.02,
+    "intermediate_size": 3072,
+    "max_position_embeddings": 512,
+    "num_attention_heads": 12,
+    "num_hidden_layers": 3,
+    "type_vocab_size": 2,
+    "vocab_size": 21128
+  },
+  "intermediate_matches": [
+    {
+      "layer_T": 0,
+      "layer_S": 0,
+      "feature": "hidden",
+      "loss": "hidden_mse",
+      "weight": 1
+    },
+    {
+      "layer_T": 8,
+      "layer_S": 2,
+      "feature": "hidden",
+      "loss": "hidden_mse",
+      "weight": 1
+    }
+  ]
+}
+mode: test
+stage: finetune
+test time consumption: 19267.917(ms)
+
+error indices in test dataset:
+[13, 14, 16, 21, 27, 41, 64, 88, 169, 213, 304, 346, 371, 376, 397, 445, 520, 568, 588, 610, 662, 734, 787, 797, 895, 902, 939, 940, 968, 1046, 1108, 1127, 1133, 1134, 1157, 1164, 1221, 1282, 1313, 1317, 1398, 1527, 1553, 1561, 1624, 1659, 1661, 1697, 1764, 1771, 1792, 1815, 1824, 1827, 1872, 1880, 1913, 1937, 1938, 2000]
+
+error distribution:
++-------+--------------+-------+------------+
+| label | y_error_pred | count | error_rate |
++=======+==============+=======+============+
+| 体育  |         游戏 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 娱乐  |         时尚 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 家居  |         房产 |     8 |      0.037 |
++-------+--------------+-------+------------+
+| 家居  |         游戏 |     4 |      0.019 |
++-------+--------------+-------+------------+
+| 家居  |         时政 |     2 |      0.009 |
++-------+--------------+-------+------------+
+| 家居  |         时尚 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 家居  |         科技 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 家居  |         娱乐 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 家居  |         教育 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 房产  |         家居 |     4 |      0.023 |
++-------+--------------+-------+------------+
+| 房产  |         财经 |     3 |      0.017 |
++-------+--------------+-------+------------+
+| 房产  |         时政 |     2 |      0.012 |
++-------+--------------+-------+------------+
+| 教育  |         房产 |     6 |      0.029 |
++-------+--------------+-------+------------+
+| 教育  |         时政 |     4 |      0.019 |
++-------+--------------+-------+------------+
+| 教育  |         财经 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 教育  |         科技 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 教育  |         娱乐 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 时政  |         房产 |     5 |      0.024 |
++-------+--------------+-------+------------+
+| 时政  |         娱乐 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 时政  |         家居 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 时政  |         教育 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 游戏  |         时政 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 游戏  |         家居 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 游戏  |         时尚 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 科技  |         游戏 |     3 |      0.015 |
++-------+--------------+-------+------------+
+| 科技  |         时尚 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 科技  |         家居 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 财经  |         时政 |     1 |      0.005 |
++-------+--------------+-------+------------+
+| 财经  |         房产 |     1 |      0.005 |
++-------+--------------+-------+------------+
+
+every classes result:
+
+家居: {'precision': 0.9655172413793104, 'recall': 0.9158878504672897, 'f1-score': 0.9400479616306955, 'support': 214.0}
+时尚: {'precision': 0.9813084112149533, 'recall': 1.0, 'f1-score': 0.9905660377358491, 'support': 210.0}
+教育: {'precision': 0.98989898989899, 'recall': 0.937799043062201, 'f1-score': 0.9631449631449631, 'support': 209.0}
+财经: {'precision': 0.9809523809523809, 'recall': 0.9903846153846154, 'f1-score': 0.985645933014354, 'support': 208.0}
+时政: {'precision': 0.9519230769230769, 'recall': 0.9611650485436893, 'f1-score': 0.9565217391304348, 'support': 206.0}
+娱乐: {'precision': 0.9852941176470589, 'recall': 0.995049504950495, 'f1-score': 0.9901477832512315, 'support': 202.0}
+科技: {'precision': 0.9897959183673469, 'recall': 0.9748743718592965, 'f1-score': 0.9822784810126581, 'support': 199.0}
+体育: {'precision': 1.0, 'recall': 0.9947643979057592, 'f1-score': 0.9973753280839895, 'support': 191.0}
+游戏: {'precision': 0.9585492227979274, 'recall': 0.9840425531914894, 'f1-score': 0.9711286089238844, 'support': 188.0}
+房产: {'precision': 0.8913043478260869, 'recall': 0.9479768786127167, 'f1-score': 0.9187675070028011, 'support': 173.0}
+
+global result:
+precision: 0.969 recall: 0.970 f1: 0.970 accuracy: 0.970 
