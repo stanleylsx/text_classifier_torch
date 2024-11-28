@@ -157,7 +157,8 @@ distill_configure = {
 ```
 `distill_mlm_config`和`intermediate_matches`可以参考TextBrewer中给出的配置进行配置，支持对Transformer Block的hidden和多头注意力进行蒸馏。
 
-* 多模型融合蒸馏  
+* 多模型融合蒸馏
+
 如果你使用K-Folds训练了K个模型，你可能想把五个模型融合成一个，本项目提供了模型融合蒸馏的方式，方法是将K个模型轮流对一个模型进行跨模型蒸馏。
 
 
